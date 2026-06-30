@@ -1,5 +1,19 @@
 pipeline {
-    agent any
+    agent {
+        kubernetes {
+            yaml '''
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: shell
+    image: alpine:latest
+    command:
+    - cat
+    tty: true
+'''
+        }
+    }
 
     stages {
         stage('Checkout') {
@@ -10,19 +24,25 @@ pipeline {
 
         stage('Build') {
             steps {
-                echo 'Building application'
+                container('shell') {
+                    sh 'echo Building application inside Kubernetes agent'
+                }
             }
         }
 
         stage('Test') {
             steps {
-                echo 'Running tests'
+                container('shell') {
+                    sh 'echo Running tests inside Kubernetes agent'
+                }
             }
         }
 
         stage('Deploy') {
             steps {
-                echo 'Deploying application'
+                container('shell') {
+                    sh 'echo Deploying application from Kubernetes agent'
+                }
             }
         }
     }
