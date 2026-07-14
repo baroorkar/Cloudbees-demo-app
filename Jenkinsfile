@@ -25,7 +25,7 @@ spec:
         stage('Build') {
             steps {
                 container('shell') {
-                    sh 'this_command_does_not_exist'
+                'sh 'echo Building application inside Kubernetes agent'
                 }
             }
         }
