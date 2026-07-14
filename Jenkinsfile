@@ -23,12 +23,12 @@ spec:
         }
 
         stage('Build') {
-            steps {
-                container('shell') {
-                'sh 'echo Building application inside Kubernetes agent'
-                }
-            }
+    steps {
+        container('shell') {
+            sh 'echo Building application inside Kubernetes agent'
         }
+    }
+}
 
         stage('Test') {
             steps {
